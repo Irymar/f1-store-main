@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'frontend/index.html'
-    branches: [master] # або твоя гілка
+    branches: [master] # або інша твоя гілка
 
 jobs:
   deploy:
@@ -14,10 +14,12 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🧰 Install AWS CLI
+      - name: 🧰 Install AWS CLI via pip
         run: |
           sudo apt update
-          sudo apt install -y awscli
+          sudo apt install -y python3-pip
+          pip install awscli --upgrade --user
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: 📤 Upload index.html to S3
         run: |
