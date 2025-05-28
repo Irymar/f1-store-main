@@ -26,7 +26,7 @@ jobs:
             if [ -d "f1-store-main" ]; then
               cd f1-store-main && git pull origin main
             else
-              git clone https://github.com/lymar/f1-store-main.git
+              git clone git@github.com:Irymar/f1-store-main.git
               cd f1-store-main
             fi
       
