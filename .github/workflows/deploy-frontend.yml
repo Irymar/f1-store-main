@@ -23,7 +23,7 @@ jobs:
 
       - name: 📤 Upload index.html to S3
         run: |
-          aws s3 cp frontend/index.html s3://f1-store-frontend/index.html \
+          aws s3 cp frontend/index.html s3://f1-store-frontend-v1/index.html \
             --acl public-read \
             --region ${{ secrets.AWS_REGION }}
         env:
