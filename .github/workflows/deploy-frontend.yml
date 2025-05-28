@@ -24,11 +24,11 @@ jobs:
       - name: 📤 Upload index.html to S3
         run: |
           aws s3 cp frontend/index.html s3://f1-store-frontend-v1/index.html \
-            --acl public-read \
             --region ${{ secrets.AWS_REGION }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 
       - name: ♻️ Invalidate CloudFront cache
         run: |
