@@ -27,9 +27,9 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             set -e
             cd ~/prod/f1-store-main
-
-            echo "${{ secrets.ENV_FILE }}" > .env
-
+      
+            printf "%b" "${{ secrets.ENV_FILE }}" > .env
+      
             sudo docker-compose down
             sudo docker-compose up -d --build
           EOF
