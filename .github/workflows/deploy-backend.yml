@@ -12,26 +12,35 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🔐 Create SSH key file
+      - name: 🔐 Create EC2 SSH key file
         run: |
           echo "${{ secrets.EC2_KEY_B64 }}" | base64 -d > private.pem
           chmod 600 private.pem
 
+      - name: 🔐 Add GitHub SSH key to access repo
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       - name: 🚀 Connect and deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i private.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+
             mkdir -p ~/prod
             cd ~/prod
-      
+
             if [ -d "f1-store-main" ]; then
               cd f1-store-main && git pull origin main
             else
               git clone git@github.com:Irymar/f1-store-main.git
               cd f1-store-main
             fi
-      
+
             echo "${{ secrets.ENV_FILE }}" > .env
-      
+
             docker-compose down
             docker-compose up -d --build
           EOF
