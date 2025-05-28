@@ -14,12 +14,12 @@ jobs:
 
       - name: 🔐 Create SSH key file
         run: |
-          echo "${{ secrets.EC2_KEY }}" > private.pem
-          chmod 600 private.pem
+          echo "${{ secrets.EC2_KEY }}" > demo1.pem
+          chmod 600 demo1.pem
 
       - name: 🚀 Connect and deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i private.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i demo1.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd ~/prod/f1-store-main
 
             echo -e "${{ secrets.ENV_FILE }}" > .env
