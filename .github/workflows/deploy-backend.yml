@@ -2,7 +2,7 @@ name: 🚀 Deploy Backend to EC2
 
 on:
   push:
-    branches: [main] # заміни на свою гілку, якщо інша
+    branches: [master] # заміни на свою гілку, якщо інша
 
 jobs:
   deploy:
